@@ -1,0 +1,29 @@
+{
+  "name": "type-only-imports-converter",
+  "version": "1.0.0",
+  "description": "Migration tool for new \"Type-only\" import clause",
+  "author": "takefumi-yoshii",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node dist/index",
+    "build": "tsc",
+    "prettier": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/node": "^13.9.1",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.6.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 80
+  }
+}

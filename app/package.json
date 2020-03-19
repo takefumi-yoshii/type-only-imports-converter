@@ -1,0 +1,14 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node src/index",
+    "start": "node dist/index",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "ts-node": "^8.6.2"
+  }
+}
