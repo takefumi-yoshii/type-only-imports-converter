@@ -4,4 +4,5 @@ export type Hoge = {
 export interface Fuga {
   fuga: 'fuga'
 }
-
+export const Piyo = 'piyo'
+export const Guwa = 'guwa'
