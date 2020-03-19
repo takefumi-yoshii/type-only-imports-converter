@@ -1,3 +1,6 @@
 import type { Hoge } from './type'
 import { Fuga } from './type'
-import { Test } from './type'
+import { Fuga as _Fuga } from './type'
+import { Hoge as HOGE, Fuga as FUGA } from './type'
+import { Test } from './type2'
+import TEST from './type2'
