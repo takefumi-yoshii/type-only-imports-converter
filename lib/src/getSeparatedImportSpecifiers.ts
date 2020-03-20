@@ -2,11 +2,18 @@ import * as ts from 'typescript'
 import { getLastChild } from './nodeHelpers'
 // ______________________________________________________
 //
+function isTypeSymbol(symbol: ts.Symbol) {
+  return (
+    symbol.flags === ts.SymbolFlags.Interface ||
+    symbol.flags === ts.SymbolFlags.TypeAlias
+  )
+}
+// ______________________________________________________
+//
 export const getSeparatedImportSpecifiers = (
   node: ts.Node,
   checker: ts.TypeChecker
 ) => {
-  // 型宣言・非型宣言の格納M配列を取得
   const [
     typeImportSpecifiers,
     nonTypeImportSpecifiers
@@ -15,26 +22,18 @@ export const getSeparatedImportSpecifiers = (
     switch (node.kind) {
       case ts.SyntaxKind.ImportSpecifier:
         if (!ts.isImportSpecifier(node)) return
-        // import している
         const symbol = checker.getSymbolAtLocation(getLastChild(node))
-        // 非シンボルは除外
         if (!symbol) {
           nonTypeImportSpecifiers.push(node)
           return
         }
-        // 非参照シンボルは除外
         if (symbol.flags !== ts.SymbolFlags.Alias) {
           nonTypeImportSpecifiers.push(node)
           return
         }
         // 参照適用シンボルを取得
         const aliasedSymbol = checker.getAliasedSymbol(symbol)
-        // 参照適用シンボルが型宣言かのフラグ
-        const flag =
-          aliasedSymbol.flags === ts.SymbolFlags.Interface ||
-          aliasedSymbol.flags === ts.SymbolFlags.TypeAlias
-        // 非型宣言参照適用シンボルの場合
-        if (!flag) {
+        if (!isTypeSymbol(aliasedSymbol)) {
           nonTypeImportSpecifiers.push(node)
           return
         }

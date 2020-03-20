@@ -2,7 +2,8 @@ import { Config } from './types'
 //_______________________________________________________
 //
 export const defaultConfig: Config = {
-  targetDir: '../app',
+  srcDir: '../app/src',
+  distDir: '../app/dist',
   tsconfigFileName: 'tsconfig.json'
 }
 export const createConfig = (injects?: Config): Config => ({

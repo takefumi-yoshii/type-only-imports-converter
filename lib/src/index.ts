@@ -5,13 +5,15 @@ import { createConfig, defaultConfig } from './config'
 import { removeUndefined } from './arrayFilters'
 import { createProgram } from './createProgram'
 import { visitSource } from './visitSource'
+import { emitFile } from './emitFile'
 // ______________________________________________________
 //
 export function run(config: Config) {
-  const srcDir = path.resolve(config.targetDir)
+  const printer = ts.createPrinter()
+  const srcDir = path.resolve(config.srcDir)
+  const distDir = path.resolve(config.distDir)
   const program: ts.Program = createProgram(srcDir, config)
   const checker: ts.TypeChecker = program.getTypeChecker()
-  const printer = ts.createPrinter()
   const sources: ts.SourceFile[] = program
     .getRootFileNames()
     .map(fileName => program.getSourceFile(fileName))
@@ -19,9 +21,9 @@ export function run(config: Config) {
   if (sources.length) {
     sources.map(source => {
       const list = visitSource(source, checker)
-      const print = printer.printList(ts.ListFormat.MultiLine, list, source)
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-      console.log(print)
+      const fileBody = printer.printList(ts.ListFormat.MultiLine, list, source)
+      const fileName = `${distDir}${source.fileName.replace(srcDir, '')}`
+      emitFile(distDir, fileName, fileBody)
     })
   }
 }

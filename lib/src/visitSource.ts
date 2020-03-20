@@ -43,8 +43,7 @@ export function visitSource(
             )
             break
           }
-          // NamedImports の場合
-          // 型宣言・非型宣言の格納M配列を取得
+          // NamedImports の場合、型宣言・非型宣言の格納配列を取得
           const [
             typeImportSpecifiers,
             nonTypeImportSpecifiers
