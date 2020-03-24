@@ -23,11 +23,7 @@ export const getSeparatedImportSpecifiers = (
       case ts.SyntaxKind.ImportSpecifier:
         if (!ts.isImportSpecifier(node)) return
         const symbol = checker.getSymbolAtLocation(getLastChild(node))
-        if (!symbol) {
-          nonTypeImportSpecifiers.push(node)
-          return
-        }
-        if (symbol.flags !== ts.SymbolFlags.Alias) {
+        if (symbol?.flags !== ts.SymbolFlags.Alias) {
           nonTypeImportSpecifiers.push(node)
           return
         }
